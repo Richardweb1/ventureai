@@ -98,6 +98,8 @@ Open `http://localhost:3000`
 
 🔗 [ventureai.vercel.app](https://ventureai.vercel.app)
 
+https://ventureai-genlayer.vercel.app/
+
 ---
 
 ## Built On
