@@ -1,7 +1,7 @@
 {
-  "name": "GenLayer Football Market",
-  "short_name": "GenLayer Market",
-  "description": "AI-powered football match predictions on GenLayer blockchain",
+  "name": "VentureAI",
+  "short_name": "VentureAI",
+  "description": "GenLayer-powered venture idea analysis with validator consensus and on-chain verdicts",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#000000",

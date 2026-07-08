@@ -288,28 +288,28 @@
     filter: brightness(1.1);
   }
 
-  /* Betting Panel Button States (Simplified) */
-  .bet-button-unselected {
+  /* Venture choice button states */
+  .venture-button-unselected {
     background: oklch(0.25 0.08 265 / 0.5);
     border: 1px solid oklch(0.30 0.10 265 / 0.4);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
-  .bet-button-unselected-a:hover {
+  .venture-button-unselected-primary:hover {
     background: oklch(0.28 0.12 300 / 0.6);
     border-color: oklch(0.65 0.22 300 / 0.6);
     transform: translateY(-2px);
     box-shadow: 0 4px 12px 0 oklch(0.65 0.22 300 / 0.2);
   }
 
-  .bet-button-unselected-b:hover {
+  .venture-button-unselected-secondary:hover {
     background: oklch(0.28 0.15 265 / 0.6);
     border-color: oklch(0.55 0.37 265 / 0.6);
     transform: translateY(-2px);
     box-shadow: 0 4px 12px 0 oklch(0.55 0.37 265 / 0.2);
   }
 
-  .bet-button-selected-a {
+  .venture-button-selected-primary {
     background: oklch(0.25 0.08 265 / 0.6);
     color: oklch(0.98 0 0);
     border: 1px solid oklch(0.65 0.22 300);
@@ -317,7 +317,7 @@
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
-  .bet-button-selected-b {
+  .venture-button-selected-secondary {
     background: oklch(0.25 0.08 265 / 0.6);
     color: oklch(0.98 0 0);
     border: 1px solid oklch(0.55 0.37 265);

@@ -2,6 +2,42 @@ import { createClient } from "genlayer-js";
 import { studionet } from "genlayer-js/chains";
 import type { IdeaEntry, TransactionReceipt } from "./types";
 
+export function parseIdeaEntry(entry: string): IdeaEntry {
+  try {
+    const parsed = JSON.parse(entry);
+    return {
+      author: parsed.author || "",
+      industry: parsed.industry || "",
+      title: parsed.title || "",
+      description: parsed.description || "",
+      verdict: parsed.verdict || "",
+      viability_score: Number(parsed.viability_score || 0),
+      market_score: Number(parsed.market_score || 0),
+      execution_score: Number(parsed.execution_score || 0),
+      differentiation_score: Number(parsed.differentiation_score || 0),
+      strengths: parsed.strengths || "",
+      risks: parsed.risks || "",
+      summary: parsed.summary || "",
+    };
+  } catch {
+    const parts = entry.split("|");
+    return {
+      author: parts[0] || "",
+      industry: parts[1] || "",
+      title: parts[2] || "",
+      description: parts[3] || "",
+      verdict: parts[4] || "",
+      viability_score: parseInt(parts[5] || "0", 10),
+      market_score: 0,
+      execution_score: 0,
+      differentiation_score: 0,
+      strengths: "",
+      risks: "",
+      summary: parts[6] || "",
+    };
+  }
+}
+
 class VentureAI {
   private contractAddress: `0x${string}`;
   private client: ReturnType<typeof createClient>;
@@ -45,18 +81,7 @@ class VentureAI {
       });
 
       if (Array.isArray(ideas)) {
-        return ideas.map((entry: string) => {
-          const parts = entry.split("|");
-          return {
-            author: parts[0] || "",
-            industry: parts[1] || "",
-            title: parts[2] || "",
-            description: parts[3] || "",
-            verdict: parts[4] || "",
-            viability_score: parseInt(parts[5] || "0"),
-            summary: parts[6] || "",
-          } as IdeaEntry;
-        });
+        return ideas.map(parseIdeaEntry);
       }
 
       return [];

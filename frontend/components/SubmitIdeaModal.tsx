@@ -1,5 +1,6 @@
 "use client";
 
+import { Lightbulb, Link2 } from "lucide-react";
 import { useState } from "react";
 import { useAnalyzeIdea } from "@/lib/hooks/useVentureAI";
 import { useWallet } from "@/lib/genlayer/wallet";
@@ -66,7 +67,7 @@ export function SubmitIdeaModal({ isOpen, onClose, onAnalyzing, onDone }: Props)
 
           {!address ? (
             <div className="text-center py-8">
-              <div className="text-4xl mb-4">🔗</div>
+              <Link2 className="mx-auto mb-4 h-10 w-10 text-accent" aria-hidden="true" />
               <p className="text-muted-foreground mb-2">Connect your wallet to submit an idea</p>
             </div>
           ) : (
@@ -100,12 +101,15 @@ export function SubmitIdeaModal({ isOpen, onClose, onAnalyzing, onDone }: Props)
               </div>
 
               <div className="bg-accent/5 border border-accent/20 rounded-lg p-3 text-xs text-muted-foreground">
-                💡 GenLayer AI validators will analyze your idea and provide a viability score, strengths, risks, and verdict stored permanently on-chain.
+                <div className="flex gap-2">
+                  <Lightbulb className="mt-0.5 h-4 w-4 shrink-0 text-accent" aria-hidden="true" />
+                  <span>GenLayer AI validators analyze structured market, execution, and differentiation scores before storing the verdict on-chain.</span>
+                </div>
               </div>
 
               <button type="submit" disabled={isAnalyzing || !industry || !title || !description}
                 className="w-full bg-accent text-black font-bold py-3 rounded-lg hover:bg-accent/90 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2">
-                🚀 Analyze My Idea
+                Analyze My Idea
               </button>
             </form>
           )}

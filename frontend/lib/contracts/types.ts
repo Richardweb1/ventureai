@@ -5,6 +5,11 @@ export interface IdeaEntry {
   description: string;
   verdict: string;
   viability_score: number;
+  market_score?: number;
+  execution_score?: number;
+  differentiation_score?: number;
+  strengths?: string;
+  risks?: string;
   summary: string;
 }
 

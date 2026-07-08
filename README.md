@@ -1,110 +1,110 @@
 # VentureAI
 
-> What if an AI could tell you whether your business idea is worth pursuing — and store that verdict on blockchain forever?
+VentureAI is a GenLayer application that turns a business idea into a consensus-reviewed venture assessment. The frontend collects an industry, title, and detailed idea description; the Intelligent Contract asks GenLayer validators to independently score the idea, compare structured outputs, and store the accepted verdict on-chain.
 
-That's VentureAI.
+## What GenLayer does here
 
----
+VentureAI does not use GenLayer as a generic AI chat backend. The contract owns the authoritative state transition:
 
-## The Idea Behind It
+1. A user submits a business idea.
+2. The leader validator produces a structured JSON assessment.
+3. Validators rerun the assessment independently.
+4. Consensus compares stable fields:
+   - `verdict`
+   - `viability_score`
+   - `market_score`
+   - `execution_score`
+   - `differentiation_score`
+5. Only an agreed result is written to on-chain storage.
 
-Every entrepreneur has been there. You have a business idea, you tell your friends, they say "that's great!" — but you never really know if it's actually viable.
+The frontend only handles wallet connection, form UX, and displaying accepted entries.
 
-VentureAI solves this differently. Instead of asking friends or paying a consultant, you submit your idea to GenLayer's AI validators. Multiple AI models independently analyze your idea, reach consensus, and store the verdict permanently on-chain. No human bias. No sugarcoating. Just honest AI analysis.
+## Assessment output
 
----
+Each accepted idea stores:
 
-## What It Does
+- submitter address
+- industry, title, and description
+- verdict: `Promising`, `Needs Work`, or `Not Viable`
+- overall viability score from `1` to `10`
+- market, execution, and differentiation sub-scores
+- strengths, risks, and a short summary
 
-You submit a business idea with three things:
-- **Industry** — Tech, Retail, Food, Health, Finance, or Other
-- **Title** — A short name for your idea
-- **Description** — Explain your idea in detail
+## Deployment evidence
 
-GenLayer's AI validators then analyze it and return:
-- A **verdict** — Promising, Needs Work, or Not Viable
-- A **viability score** — 1 to 10
-- A **summary** — honest feedback on strengths and risks
+- Live app: [ventureai.vercel.app](https://ventureai.vercel.app)
+- GenLayer network: StudioNet
+- Contract address: [`0x9bb2921655D785e4d7dd827534D9Dca528635E36`](https://explorer-studio.genlayer.com/address/0x9bb2921655D785e4d7dd827534D9Dca528635E36)
+- Contract source: [`contracts/venture_ai.py`](contracts/venture_ai.py)
 
-The result is stored permanently on-chain. Anyone can browse all analyzed ideas publicly.
+If redeployed, update `NEXT_PUBLIC_CONTRACT_ADDRESS` in `frontend/.env` and record the new transaction hash here.
 
----
+## Versions
 
-## Why GenLayer?
+- GenLayer SDK: `genlayer-js@0.18.3`
+- GenVM runner pinned in contract:
+  `py-genlayer:1jb45aa8ynh2a9c9xn3b7qqh8sm5q93hwfp7jqmwsfhh8jpz09h6`
+- Frontend: Next.js + TypeScript + Tailwind CSS
+- Wallet: MetaMask
 
-Regular blockchains can only do math. They can't read, understand, or judge the quality of a business idea.
+The contract intentionally avoids `py-genlayer:test`, `py-genlayer:latest`, or unpinned runtime aliases.
 
-GenLayer changes this with **Intelligent Contracts** — smart contracts powered by AI that can understand natural language, access the internet, and make intelligent decisions through consensus.
-
-This makes VentureAI possible. The verdict isn't decided by one AI or one person — it's decided by multiple validators that must agree. That's what makes it trustworthy.
-
----
-
-## Tech Stack
-
-- **Smart Contract** — Python (GenLayer Intelligent Contract v0.2.16)
-- **Frontend** — Next.js + TypeScript + Tailwind CSS
-- **Blockchain** — GenLayer Studionet
-- **SDK** — genlayer-js
-- **Wallet** — MetaMask
-
----
-
-## Contract
-
-- **Address:** `0x9bb2921655D785e4d7dd827534D9Dca528635E36`
-- **Network:** GenLayer Studionet
-- **Explorer:** [explorer-studio.genlayer.com](https://explorer-studio.genlayer.com/address/0x9bb2921655D785e4d7dd827534D9Dca528635E36)
-
----
-
-## How to Run Locally
+## Run locally
 
 ```bash
-# Clone the repo
 git clone https://github.com/Richardweb1/ventureai.git
 cd ventureai
-
-# Install dependencies
-cd frontend
 npm install
-
-# Add your contract address
+cd frontend
 cp .env.example .env
-# Edit .env and set NEXT_PUBLIC_CONTRACT_ADDRESS
+```
 
-# Start the app
+Set the contract address:
+
+```bash
+NEXT_PUBLIC_CONTRACT_ADDRESS=0x9bb2921655D785e4d7dd827534D9Dca528635E36
+```
+
+Start the app:
+
+```bash
 npm run dev
 ```
 
-Open `http://localhost:3000`
+Open `http://localhost:3000`.
 
----
+## Reviewer demo flow
 
-## How to Use
+1. Open the live app or local app.
+2. Connect MetaMask.
+3. Submit a detailed business idea, at least 40 characters.
+4. Confirm the GenLayer transaction.
+5. Wait for validator consensus.
+6. Refresh or wait for the ideas list to reload.
+7. Confirm the stored output shows verdict, viability score, sub-scores, strengths, risks, and summary.
 
-1. Connect your MetaMask wallet
-2. Click **"Analyze My Business Idea"**
-3. Select an industry
-4. Enter your idea title and description
-5. Click **"Analyze My Idea"**
-6. Sign the transaction in MetaMask
-7. Wait ~30 seconds for AI validators to reach consensus
-8. Your verdict appears on the page!
+## Tests and checks
 
----
+Run the project checks:
 
-## Live Demo
+```bash
+npm run test
+npm run build
+```
 
-🔗 [ventureai.vercel.app](https://ventureai.vercel.app)
+Lint the Intelligent Contract with GenVM:
 
-https://ventureai-genlayer.vercel.app/
+```bash
+genvm-lint check contracts/venture_ai.py
+```
 
----
+The included tests verify:
 
-## Built On
+- no unrelated scaffold leftovers in contract code
+- pinned GenLayer runtime
+- structured validator fields are present
+- frontend parsing supports both new JSON entries and legacy pipe-delimited entries
 
-[GenLayer](https://genlayer.com) — The first blockchain with AI-powered Intelligent Contracts.
+## Repository hygiene
 
----
-
+This repo has been cleaned of old scaffold references. Project metadata, manifest, wallet copy, and package descriptions now describe VentureAI only.

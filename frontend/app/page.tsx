@@ -43,7 +43,7 @@ export default function HomePage() {
               onClick={() => setIsModalOpen(true)}
               className="bg-accent text-black font-bold px-8 py-3 rounded-lg hover:bg-accent/90 transition-all duration-200 hover:-translate-y-0.5 shadow-lg shadow-accent/20"
             >
-              🚀 Analyze My Business Idea
+              Analyze My Business Idea
             </button>
           </div>
 

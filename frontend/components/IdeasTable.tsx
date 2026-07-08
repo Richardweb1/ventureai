@@ -2,6 +2,7 @@
 
 import { useIdeas } from "@/lib/hooks/useVentureAI";
 import { AddressDisplay } from "./AddressDisplay";
+import { Lightbulb } from "lucide-react";
 
 const verdictColors: Record<string, string> = {
   "Promising": "text-green-400 bg-green-400/10 border-green-400/30",
@@ -72,7 +73,7 @@ export function IdeasTable() {
       {/* Empty State */}
       {!ideas || ideas.length === 0 ? (
         <div className="text-center py-16">
-          <div className="text-5xl mb-4 opacity-30">💡</div>
+          <Lightbulb className="mx-auto mb-4 h-12 w-12 text-accent/50" aria-hidden="true" />
           <h3 className="text-lg font-semibold mb-2">No ideas analyzed yet</h3>
           <p className="text-muted-foreground text-sm">
             Be the first to submit a business idea for AI analysis!
@@ -110,6 +111,29 @@ export function IdeasTable() {
                   {idea.summary}
                 </p>
               )}
+
+              <div className="mt-4 grid gap-3 md:grid-cols-3">
+                <div className="rounded-lg border border-white/10 bg-white/5 p-3">
+                  <p className="text-xs uppercase tracking-wide text-muted-foreground">Viability</p>
+                  <p className="mt-1 text-xl font-bold text-accent">{idea.viability_score}/10</p>
+                </div>
+                <div className="rounded-lg border border-white/10 bg-white/5 p-3">
+                  <p className="text-xs uppercase tracking-wide text-muted-foreground">Strengths</p>
+                  <p className="mt-1 text-sm text-muted-foreground">{idea.strengths || "Legacy submission"}</p>
+                </div>
+                <div className="rounded-lg border border-white/10 bg-white/5 p-3">
+                  <p className="text-xs uppercase tracking-wide text-muted-foreground">Risks</p>
+                  <p className="mt-1 text-sm text-muted-foreground">{idea.risks || "Legacy submission"}</p>
+                </div>
+              </div>
+
+              {(idea.market_score || idea.execution_score || idea.differentiation_score) ? (
+                <div className="mt-3 flex flex-wrap gap-2 text-xs text-muted-foreground">
+                  <span className="rounded-full border border-white/10 px-3 py-1">Market {idea.market_score}/10</span>
+                  <span className="rounded-full border border-white/10 px-3 py-1">Execution {idea.execution_score}/10</span>
+                  <span className="rounded-full border border-white/10 px-3 py-1">Differentiation {idea.differentiation_score}/10</span>
+                </div>
+              ) : null}
             </div>
           ))}
         </div>

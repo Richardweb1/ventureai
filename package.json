@@ -8,9 +8,10 @@
     "build": "cd frontend && npm run build",
     "start": "cd frontend && npm run start",
     "lint": "cd frontend && npm run lint",
+    "test": "node tests/contract_schema.test.mjs && cd frontend && npm run test",
     "deploy": "genlayer deploy"
   },
   "devDependencies": {
-    "genlayer-js": "^0.18.3"
+    "genlayer-js": "0.18.3"
   }
 }
